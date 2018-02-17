@@ -26,8 +26,8 @@ function trueFalse(url){
 			return response.json()
 		})
 		.then( (data) =>{
-			console.log(data)
-			printQuestion(data)
+			console.log(data.results)
+			printQuestion(data.results)
 		})
 }
 
@@ -94,6 +94,41 @@ function printMultiple(data){
 	}
 
 
-function printQuestion(){
+function printQuestion(data){
+	let i=0; 
+	let category = data[i].category; 
+	let difficulty = data[i].difficulty;
+	let correct = data[i].correct_answer;
+	let question = data[i].question; 
+
+	$(".preguntas").append(`<p id="category" class="la"> ${category}</p>
+													<p id="difficulty" class="la"> ${difficulty}</p>
+													<p id="question" class="la">${question}</p>
+													<div class="col-lg-4 col-lg-offset-2 divans btn">TRUE</div>
+													<div class="col-lg-4 col-lg-offset-2 divans btn">FALSE</div>
+													<button class="btn next">Next</button>
+													<div class="dibujoCorrecto escondida">
+														<p>correcto</p>
+													</div>
+
+													<div class="dibujoIncorrecto escondida">
+														<p>Incorrecto</p>
+													</div>`)
+
+$(".next").click( ()=>{
+		
+		$(".dibujoCorrecto").addClass('escondida'); 
+		$(".dibujoIncorrecto").addClass('escondida');
+		data.shift();
+		console.log(data);
+		$(".preguntas").empty();
+		if(data.length<1){
+			$("#endGame").removeClass('escondida')
+			$(".preguntas").addClass('escondida')
+		}else {
+			printQuestion(data)
+		}
+		 
+	})
 
 }

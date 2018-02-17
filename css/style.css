@@ -52,6 +52,11 @@ li .answer{
 	list-style: none;
 }
 
+.divans{
+	height: 100px;
+	border: 1px solid black;
+}
+
 /*End Game*/
 
 #endGame{
