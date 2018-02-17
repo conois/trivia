@@ -1,0 +1,62 @@
+/*General*/
+.head{
+	height: 70px;
+	background-color: #FAFAFA;
+	color: #9BBB63; 
+}
+.centerBox{
+	display: flex; 
+	justify-content: center;
+}
+
+.escondida{
+	display: none; 
+}
+
+.divFoo{
+	outline: 2px solid black;
+	height: 10vh; 
+}
+
+/*Presentation*/
+
+h1{
+	text-align: center;
+}
+
+.presentation{
+	height: 79vh; 
+	outline: 1px solid red;
+}
+.presentation h2{
+	text-align: center;
+}
+#btnStart{
+	margin-top: 30px; 
+}
+
+/*Alternativas*/
+
+#alternativas{
+	height: 79vh; 
+}
+/*Preguntas*/ 
+.preguntas{
+	height: 79vh;
+	outline: 1px solid red; 
+}
+li .answer{
+	background-color: #D8CECE; 
+	height: 25px; 
+	padding-left: 5px;
+	list-style: none;
+}
+
+/*End Game*/
+
+#endGame{
+	height: 79vh; 
+}
+
+
+
