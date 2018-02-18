@@ -1,8 +1,13 @@
+let triviaHandler;
+let triviaQuestions;
+
 $(document).ready( ()=>{
 	
 	$("#trueFalse").click( () => {
 		$("#trueFalse p").append(`<i class="fas fa-check-square"></i> 
 															<span>GO ! </span>`)
+
+		triviaHandler = printQuestion;
 		setTimeout( () =>{
 			let url = 'https://opentdb.com/api.php?amount=10&type=boolean'; 
 			trueFalse(url)
@@ -12,12 +17,12 @@ $(document).ready( ()=>{
 	$("#multiple").click( () =>{
 	$("#multiple p").append(`<i class="fas fa-check-square"></i>
 														<span> GO ! </span>`)
+		triviaHandler = printMultiple;
 		setTimeout( () =>{
 			let url = 'https://opentdb.com/api.php?amount=10&type=multiple';
 			multiple(url);
 		}, 2500)
 	})
-
 });
 
 
@@ -30,7 +35,8 @@ function trueFalse(url){
 		})
 		.then( (data) =>{
 			console.log(data.results)
-			printQuestion(data.results)
+			triviaQuestions = data.results;
+			printQuestion()
 		})
 }
 
@@ -43,21 +49,21 @@ function multiple(url){
 		})
 		.then( (data) =>{
 			console.log(data.results)
-			printMultiple(data.results)
+			triviaQuestions = data.results;
+			printMultiple()
 		})
 }
 
 /*FUNCIONES */
-function printMultiple(data){
-	let results = data;
+function printMultiple(){
 	let i=0; 
-	let category = results[i].category;
-	let difficulty = results[i].difficulty; 
-	let question = results[i].question;
-	let correct= results[i].correct_answer; 
-	let inc_0=results[i].incorrect_answers[0]; 
-	let inc_1=results[i].incorrect_answers[1]; 
-	let inc_2=results[i].incorrect_answers[2]; 
+	let category = triviaQuestions[i].category;
+	let difficulty = triviaQuestions[i].difficulty; 
+	let question = triviaQuestions[i].question;
+	let correct= triviaQuestions[i].correct_answer; 
+	let inc_0=triviaQuestions[i].incorrect_answers[0]; 
+	let inc_1=triviaQuestions[i].incorrect_answers[1]; 
+	let inc_2=triviaQuestions[i].incorrect_answers[2]; 
 
 	$(".preguntas").append(`
 					<p id="category" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i><b>Category :</b> </span>${category}</p>
@@ -94,30 +100,15 @@ function printMultiple(data){
 					</div>`)
 		}
 	})
-
-	$(document).on('click', '.next', (e)=>{
-		results.shift(); 
-		console.log(results)
-		$(".checkAns").css({'background-color' : 'white'})
-		$(".dibujoCorrecto").addClass('escondida'); 
-		$(".dibujoIncorrecto").addClass('escondida');
-		$(".preguntas").empty();
-		if(results.length<1){
-			$("#endGame").removeClass('escondida')
-			$(".preguntas").addClass('escondida')
-		}else {
-			printMultiple(results)
-		}
-	})
-	}
+}
 
 
-function printQuestion(data){
+function printQuestion(){
 	let i=0; 
-	let category = data[i].category; 
-	let difficulty = data[i].difficulty;
-	let correct = data[i].correct_answer;
-	let question = data[i].question; 
+	let category = triviaQuestions[i].category; 
+	let difficulty = triviaQuestions[i].difficulty;
+	let correct = triviaQuestions[i].correct_answer;
+	let question = triviaQuestions[i].question; 
 
 	$(".preguntas").append(`
 					<p id="category" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i><b>Category :</b> </span>${category}</p>
@@ -151,18 +142,20 @@ function printQuestion(data){
 		}
 	})
 
-	$(document).on('click', '.next', (e)=>{
-			data.shift();
-			console.log(data)
-			$(".checkAns").css({'background-color' : 'white'})
-			$(".dibujoCorrecto").addClass('escondida'); 
-			$(".dibujoIncorrecto").addClass('escondida');
-			$(".preguntas").empty();
-			if(data.length<1){
-				$("#endGame").removeClass('escondida')
-				$(".preguntas").addClass('escondida')
-			}else {
-				printQuestion(data)
-			}	 
-	})
+	
 }
+
+$(document).on('click', '.next', (e)=>{
+		triviaQuestions.shift();
+		console.log(triviaQuestions)
+		$(".checkAns").css({'background-color' : 'white'})
+		$(".dibujoCorrecto").addClass('escondida'); 
+		$(".dibujoIncorrecto").addClass('escondida');
+		$(".preguntas").empty();
+		if(triviaQuestions.length<1){
+			$("#endGame").removeClass('escondida')
+			$(".preguntas").addClass('escondida')
+		} else {
+			triviaHandler(triviaQuestions)
+		}	 
+})
