@@ -5,7 +5,9 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Trivia</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy:300,400|Inconsolata:300,400,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
 
@@ -22,42 +24,47 @@
 <section>
 	<div class="container">
 		<div class="row">
-
 			<div class="presentation col-xs-12">
-				<div id="contImg" class="centerBox">
-					<img src="img/gato.jpg" alt="imagen-trivia">
-				</div>
-
-				<h2>Welcome to Trivia</h2>
-				<div class="centerBox">
-					<h4>Seleccione el tipo de respuesta</h4>
-					<button id="trueFalse">True/False</button>
-					<button id="multiple">Multiple</button>
-					<button id="btnStart" class="btn btn-info btn-lg ">Start!</button>
+				<div class=" bienvenida col-lg-6 col-lg-offset-3 col-xs-10 col-xs-offset-1">
+						<h2>Welcome to Trivia</h2>
+						<p>Select the game to start !</p>
+						<div id="trueFalse" class="btn selectGame col-xs-offset-1 col-xs-5">
+							<p>True / false </p> 
+						</div>
+						<div id="multiple" class="btn selectGame col-xs-offset-0 col-xs-5">
+							<p>Multiple</p>
+						</div>
 				</div>
 			</div>
-			
 			<!--Aca se agregan las preguntas -->
 			<div class="preguntas escondida"></div>
 
 			<!--Final de juego con resumen -->
-			<div id="endGame">
+			<div id="endGame" class="escondida">
 				<p>RESUMEN DEL JUEGO </p>
 			</div>
+</section>
 
-
+<main>
+	<div class="container">
 		<div class="row">
-			<div class="navFoot fixed-bottom">
-				<div class="col-xs-4 divFoo">home</div>
-				<div class="col-xs-4 divFoo">About</div>
-				<div class="col-xs-4 divFoo">Setting</div>
+			<div class="navFoot">
+				<div class="col-xs-4 divFoo">
+					<i class="fas fa-home fat"></i>
+					<p>HOME</p>
+				</div>
+				<div class="col-xs-4 divFoo">
+					<i class="fas fa-info fat"></i>
+					<p>ABOUT</p>
+				</div>
+				<div class="col-xs-4 divFoo">
+					<i class="fas fa-cogs fat"></i>
+					<p>SETTING</p>
+				</div>
 			</div>
 		</div>
 	</div>
-</section>
-
-
-
+</main>
 
 
 <script

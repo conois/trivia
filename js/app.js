@@ -1,26 +1,29 @@
 $(document).ready( ()=>{
 	
-	$("#btnStart").click( () =>{ 
-		$(".presentation").hide(); 
-		$(".preguntas").removeClass("escondida"); 
-		})
-
 	$("#trueFalse").click( () => {
-		console.log("true/false"); 
-		let url = 'https://opentdb.com/api.php?amount=10&type=boolean'; 
-		trueFalse(url)
+		$("#trueFalse p").append(`<i class="fas fa-check-square"></i> 
+															<span>GO ! </span>`)
+		setTimeout( () =>{
+			let url = 'https://opentdb.com/api.php?amount=10&type=boolean'; 
+			trueFalse(url)
+		}, 2500)	
 	})
 
 	$("#multiple").click( () =>{
-		console.log(" multiple ")
-		let url = 'https://opentdb.com/api.php?amount=10&type=multiple';
-		multiple(url);
+	$("#multiple p").append(`<i class="fas fa-check-square"></i>
+														<span> GO ! </span>`)
+		setTimeout( () =>{
+			let url = 'https://opentdb.com/api.php?amount=10&type=multiple';
+			multiple(url);
+		}, 2500)
 	})
 
-})
+});
 
 
 function trueFalse(url){
+	$(".presentation").hide(); 
+	$(".preguntas").removeClass("escondida"); 
 	fetch(url)
 		.then((response) =>{
 			return response.json()
@@ -32,6 +35,8 @@ function trueFalse(url){
 }
 
 function multiple(url){
+	$(".presentation").hide(); 
+	$(".preguntas").removeClass("escondida"); 
 	fetch(url)
 		.then((response) =>{
 			return response.json()
@@ -55,33 +60,47 @@ function printMultiple(data){
 	let inc_2=results[i].incorrect_answers[2]; 
 
 	$(".preguntas").append(`
-					<p id="category" class="la"> ${category}</p>
-					<p id="difficulty" class="la"> ${difficulty}</p>
-					<p id="question" class="la">${question}</p>
+					<p id="category" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i><b>Category :</b> </span>${category}</p>
+					<p id="difficulty" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i>Difficulty :</span> ${difficulty}</p>
+					<p id="question">${question}</p>
 					<ul id="response" class="la">
-						<li id="ans_1" class="btn checkAns answer">${inc_0}</li>
-						<li id="ans_2" class="btn checkAns answer">${correct}</li>
-						<li id="ans_3" class="btn checkAns answer">${inc_1}</li>
-						<li id="ans_4" class="btn checkAns answer">${inc_2}</li>
-					</ul>
+						<li id="ans_1" class="checkAns answer">${inc_0}</li>
+						<li id="ans_2" class="checkAns answer">${correct}</li>
+						<li id="ans_3" class="checkAns answer">${inc_1}</li>
+						<li id="ans_4" class="checkAns answer">${inc_2}</li>
+					</ul>`)
 
-					<button class="btn next">Next</button>
+	$(document).on('click', '.answer', (e) => {
+		let event = e.target;
+		let respuesta = $(event).text();
 
-					<div class="dibujoCorrecto escondida">
-						<p>correcto</p>
+		if( respuesta == correct ){
+			$(".preguntas").empty(); 
+			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
+						<p><i class="far fa-check-circle"></i></p>
+						<p id="msg">Correct !!!</p>
 					</div>
-
-					<div class="dibujoIncorrecto escondida">
-						<p>Incorrecto</p>
+					<div>
+						<button class="btn next">NEXT QUESTION</button>
+					</div>`)
+		}else{
+			$(".preguntas").empty()
+			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
+						<p><i class="far fa-times-circle"></i></p>
+						<p id="msg-inc"> Wrong !!!</p>
 					</div>
-				</div>`)
+					<div>
+						<button class="btn next">NEXT QUESTION</button>
+					</div>`)
+		}
+	})
 
-	$(".next").click( ()=>{
+	$(document).on('click', '.next', (e)=>{
+		results.shift(); 
+		console.log(results)
 		$(".checkAns").css({'background-color' : 'white'})
 		$(".dibujoCorrecto").addClass('escondida'); 
 		$(".dibujoIncorrecto").addClass('escondida');
-		results.shift();
-		console.log(results);
 		$(".preguntas").empty();
 		if(results.length<1){
 			$("#endGame").removeClass('escondida')
@@ -89,7 +108,6 @@ function printMultiple(data){
 		}else {
 			printMultiple(results)
 		}
-		 
 	})
 	}
 
@@ -101,34 +119,50 @@ function printQuestion(data){
 	let correct = data[i].correct_answer;
 	let question = data[i].question; 
 
-	$(".preguntas").append(`<p id="category" class="la"> ${category}</p>
-													<p id="difficulty" class="la"> ${difficulty}</p>
-													<p id="question" class="la">${question}</p>
-													<div class="col-lg-4 col-lg-offset-2 divans btn">TRUE</div>
-													<div class="col-lg-4 col-lg-offset-2 divans btn">FALSE</div>
-													<button class="btn next">Next</button>
-													<div class="dibujoCorrecto escondida">
-														<p>correcto</p>
-													</div>
+	$(".preguntas").append(`
+					<p id="category" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i><b>Category :</b> </span>${category}</p>
+					<p id="difficulty" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i>Difficulty :</span> ${difficulty}</p>
+					<p id="question">${question}</p>
+					<div class="col-lg-4 col-lg-offset-2 divans btn answer"><p>True</p></div>
+					<div class="col-lg-4 col-lg-offset-2 divans btn answer"><p>False</p></div>`)
 
-													<div class="dibujoIncorrecto escondida">
-														<p>Incorrecto</p>
-													</div>`)
+	$(document).on('click', '.answer', (e) => {
+		let event = e.target;
+		let respuesta = $(event).text();
 
-$(".next").click( ()=>{
-		
-		$(".dibujoCorrecto").addClass('escondida'); 
-		$(".dibujoIncorrecto").addClass('escondida');
-		data.shift();
-		console.log(data);
-		$(".preguntas").empty();
-		if(data.length<1){
-			$("#endGame").removeClass('escondida')
-			$(".preguntas").addClass('escondida')
-		}else {
-			printQuestion(data)
+		if( respuesta == correct ){
+			$(".preguntas").empty(); 
+			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
+						<p><i class="far fa-check-circle"></i></p>
+						<p id="msg">Correct !!!</p>
+					</div>
+					<div>
+						<button class="btn next">NEXT QUESTION</button>
+					</div>`)
+		}else{
+			$(".preguntas").empty()
+			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
+						<p><i class="far fa-times-circle"></i></p>
+						<p id="msg-inc"> Wrong !!!</p>
+					</div>
+					<div>
+						<button class="btn next">NEXT QUESTION</button>
+					</div>`)
 		}
-		 
 	})
 
+	$(document).on('click', '.next', (e)=>{
+			data.shift();
+			console.log(data)
+			$(".checkAns").css({'background-color' : 'white'})
+			$(".dibujoCorrecto").addClass('escondida'); 
+			$(".dibujoIncorrecto").addClass('escondida');
+			$(".preguntas").empty();
+			if(data.length<1){
+				$("#endGame").removeClass('escondida')
+				$(".preguntas").addClass('escondida')
+			}else {
+				printQuestion(data)
+			}	 
+	})
 }

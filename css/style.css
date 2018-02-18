@@ -1,8 +1,28 @@
+/*COLORES 
+Azul oscuro : #0F324E;
+amarillo :#ED8F07;
+palido: #F7BE79;
+celeste: #63AAC6
+
+FUENTES 
+font-family: 'Luckiest Guy', cursive;
+font-family: 'Inconsolata', monospace; // cuerpo 
+
+*/
+
 /*General*/
+*{
+	box-sizing: border-box;
+}
 .head{
 	height: 70px;
-	background-color: #FAFAFA;
-	color: #9BBB63; 
+	background-color:  #0F324E; 
+	color: #FFF;
+	text-transform: uppercase;
+	font-family: 'Luckiest Guy', cursive;
+	font-weight: 400;
+	letter-spacing: 5px;
+
 }
 .centerBox{
 	display: flex; 
@@ -12,11 +32,36 @@
 .escondida{
 	display: none; 
 }
-
+.navfoo{
+	height: 12vh;
+	background-color:  #0F324E; 
+}
 .divFoo{
-	outline: 2px solid black;
+	display: flex; 
+	justify-content: center;
+	flex-wrap: wrap;
+	background-color:  #0F324E; 
+	border-right: 1px solid black;
 	height: 10vh; 
 }
+.divFoo p {
+	font-size: 14px;
+	color: #FFF;
+	font-family: 'Luckiest Guy', cursive;
+	margin-top: 25px;
+}
+
+.divFoo p:hover{
+	color: #F7BE79
+}
+
+.fat{
+	font-size: 30px; 
+	color: white; 
+	margin-top: 15px;
+	margin-right: 10px;
+}
+
 
 /*Presentation*/
 
@@ -26,13 +71,41 @@ h1{
 
 .presentation{
 	height: 79vh; 
-	outline: 1px solid red;
+	background-image:  url(../img/wrong_question_header.jpg); 
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
-.presentation h2{
+.bienvenida h2{
 	text-align: center;
+	font-family: 'Luckiest Guy', cursive;
+	color: #FFF;
+	display: block
 }
-#btnStart{
-	margin-top: 30px; 
+.bienvenida{
+	border: 2px solid #ED8F07;
+	position: absolute;
+	top: 120px; 
+	height: 28vh;
+	z-index: 10;
+	color: white;
+	background-color: #63AAC6; 
+}
+
+.bienvenida p{
+	text-align: center;
+	font-family: 'Inconsolata', monospace;
+}
+
+.selectGame{
+	margin-top: 10px; 
+	height: 40px; 
+	border: 1px solid #fff;
+	font-family: 'Inconsolata', monospace;
+}
+
+.fa-check-square{
+	margin-left: 8px;
 }
 
 /*Alternativas*/
@@ -43,13 +116,25 @@ h1{
 /*Preguntas*/ 
 .preguntas{
 	height: 79vh;
-	outline: 1px solid red; 
+	background-color: #ED8F07;
+	color: white; 
 }
-li .answer{
-	background-color: #D8CECE; 
-	height: 25px; 
-	padding-left: 5px;
+.answer{
+	background-color: #63AAC6 ;
+	color: #FFF;  
+	height: 45px; 
 	list-style: none;
+	display: block;
+	margin-right: 30px; 
+	margin-top: 5px;
+	border-radius: 5px;
+	padding: 5px 5px 5px 15px; 
+}
+
+.answer:hover{
+	color: #0F324E;
+	background-color: #ED8F07;
+	cursor: pointer;
 }
 
 .divans{
@@ -57,11 +142,85 @@ li .answer{
 	border: 1px solid black;
 }
 
+.la{
+	font-family: 'Inconsolata', monospace;
+	font-weight: 700; 
+	font-size: 20px; 
+}
+.quesInfo:nth-child(1){
+	padding-top: 20px;
+}
+.quesInfo{
+	margin-left: 30px;
+	font-family: 'Inconsolata', monospace;
+	font-weight: 700; 
+	font-size: 18px; 
+}
+.fa-certificate{
+	font-size: 16px; 
+	color: #fff ; 
+	margin-right: 5px; 
+}
+
+#question{
+	font-family: 'Luckiest Guy', cursive;
+	font-size: 23px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20px; 
+	text-align: center;
+}
+
+.dibujoCorrecto{
+	display: flex; 
+	justify-content: center;
+	flex-wrap: wrap;
+	height: 50vh; 
+	position: relative;
+	top: 80px; 
+	background-color: #FFF;
+}
+
+.fa-check-circle{
+	font-size:100px;
+	color: #63AAC6 ;
+	padding-top: 20px; 
+}
+
+.fa-times-circle{
+	font-size:100px;
+	color: #F20E0E ;
+	padding-top: 20px; 
+}
+#msg{
+	font-size: 35px; 
+	font-family: 'Luckiest Guy', cursive;
+	color: #ED8F07;
+}
+#msg-inc{
+	font-size: 35px; 
+	font-family: 'Luckiest Guy', cursive;
+	color: #F20E0E ;
+}
+.next{
+	height: 50px; 
+	width: 60%;
+	background-color: #0F324E;
+	color: #ED8F07; 
+	border: 1px solid #0F324E;
+	font-family: 'Inconsolata', monospace;
+	font-size: 20px;
+	font-weight: 700;
+	position: relative;
+	left: 20%; 
+	top: 100px; 
+}
+
+.next:hover{
+	color: white; 
+}
 /*End Game*/
 
 #endGame{
 	height: 79vh; 
 }
-
-
-
