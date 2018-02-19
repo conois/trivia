@@ -1,10 +1,18 @@
 $(document).ready( ()=>{
+
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+	})
+
+	$("#home").click( () => {
+		location.reload();	
+	})
 	
 	$("#trueFalse").click( () => {
 		$("#trueFalse p").append(`<i class="fas fa-check-square"></i> 
 															<span>GO ! </span>`)
 		setTimeout( () =>{
-			let url = 'https://opentdb.com/api.php?amount=10&type=boolean'; 
+			let url = 'https://opentdb.com/api.php?amount=20&type=boolean'; 
 			trueFalse(url)
 		}, 2500)	
 	})
@@ -13,13 +21,15 @@ $(document).ready( ()=>{
 	$("#multiple p").append(`<i class="fas fa-check-square"></i>
 														<span> GO ! </span>`)
 		setTimeout( () =>{
-			let url = 'https://opentdb.com/api.php?amount=10&type=multiple';
+			let url = 'https://opentdb.com/api.php?amount=20&type=multiple';
 			multiple(url);
 		}, 2500)
 	})
 
 });
 
+let cont_buenas= 0;
+let cont_malas = 0; 
 
 function trueFalse(url){
 	$(".presentation").hide(); 
@@ -49,15 +59,15 @@ function multiple(url){
 
 /*FUNCIONES */
 function printMultiple(data){
-	let results = data;
-	let i=0; 
-	let category = results[i].category;
-	let difficulty = results[i].difficulty; 
-	let question = results[i].question;
-	let correct= results[i].correct_answer; 
-	let inc_0=results[i].incorrect_answers[0]; 
-	let inc_1=results[i].incorrect_answers[1]; 
-	let inc_2=results[i].incorrect_answers[2]; 
+	const results = data;
+	const i=results.length -1; 
+	const category = results[i].category;
+	const difficulty = results[i].difficulty; 
+	const question = results[i].question;
+	const correct= results[i].correct_answer; 
+	const inc_0=results[i].incorrect_answers[0]; 
+	const inc_1=results[i].incorrect_answers[1]; 
+	const inc_2=results[i].incorrect_answers[2]; 
 
 	$(".preguntas").append(`
 					<p id="category" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i><b>Category :</b> </span>${category}</p>
@@ -71,10 +81,12 @@ function printMultiple(data){
 					</ul>`)
 
 	$(document).on('click', '.answer', (e) => {
-		let event = e.target;
-		let respuesta = $(event).text();
-
+		const event = e.target;
+		const respuesta = $(event).text();
 		if( respuesta == correct ){
+			cont_buenas++
+			console.log("buenas" + cont_buenas)
+			console.log(cont_buenas)
 			$(".preguntas").empty(); 
 			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
 						<p><i class="far fa-check-circle"></i></p>
@@ -84,10 +96,12 @@ function printMultiple(data){
 						<button class="btn next">NEXT QUESTION</button>
 					</div>`)
 		}else{
+			cont_malas++
+			console.log("malas" + cont_malas)
 			$(".preguntas").empty()
 			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
 						<p><i class="far fa-times-circle"></i></p>
-						<p id="msg-inc"> Wrong !!!</p>
+						<p id="msg-inc"> Aww wrong!!!</p>
 					</div>
 					<div>
 						<button class="btn next">NEXT QUESTION</button>
@@ -96,7 +110,7 @@ function printMultiple(data){
 	})
 
 	$(document).on('click', '.next', (e)=>{
-		results.shift(); 
+		results.pop(); 
 		console.log(results)
 		$(".checkAns").css({'background-color' : 'white'})
 		$(".dibujoCorrecto").addClass('escondida'); 
@@ -109,16 +123,23 @@ function printMultiple(data){
 			printMultiple(results)
 		}
 	})
+
+	if (cont_buenas>=3){
+		$("#final").html(` Haz ganado :)  !!! `)
+	}else{
+		$("#final").html(` Haz perdido :(  !!! `)
+	}
+	$("#respuestas_correctas").html(`Respuestas Correctas: ${cont_buenas}`)
+	$("#respuestas_incorrectas").html(`Respuestas Incorrectas: ${5- cont_buenas}`) 
 	}
 
-
 function printQuestion(data){
-	let i=0; 
-	let category = data[i].category; 
-	let difficulty = data[i].difficulty;
-	let correct = data[i].correct_answer;
-	let question = data[i].question; 
-
+	const i=0; 
+	const category = data[i].category; 
+	const difficulty = data[i].difficulty;
+	const correct = data[i].correct_answer;
+	const question = data[i].question; 
+	$(".preguntas").empty(); 
 	$(".preguntas").append(`
 					<p id="category" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i><b>Category :</b> </span>${category}</p>
 					<p id="difficulty" class='quesInfo'><span class="la"><i class="fas fa-certificate"></i>Difficulty :</span> ${difficulty}</p>
@@ -127,10 +148,11 @@ function printQuestion(data){
 					<div class="col-lg-4 col-lg-offset-2 divans btn answer"><p>False</p></div>`)
 
 	$(document).on('click', '.answer', (e) => {
-		let event = e.target;
-		let respuesta = $(event).text();
-
+		const event = e.target;
+		const respuesta = $(event).text(); 
 		if( respuesta == correct ){
+			cont_buenas++
+			console.log("buenas" + cont_buenas)
 			$(".preguntas").empty(); 
 			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
 						<p><i class="far fa-check-circle"></i></p>
@@ -140,6 +162,8 @@ function printQuestion(data){
 						<button class="btn next">NEXT QUESTION</button>
 					</div>`)
 		}else{
+			cont_malas++
+			console.log("malas: " + cont_malas)
 			$(".preguntas").empty()
 			$(".preguntas").append(`<div class="dibujoCorrecto col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
 						<p><i class="far fa-times-circle"></i></p>
@@ -165,4 +189,14 @@ function printQuestion(data){
 				printQuestion(data)
 			}	 
 	})
+	if (cont_buenas>=3){
+		$("#final").html(` Haz ganado :)  !!! `)
+	}else{
+		$("#final").html(` Haz perdido :(  !!! `)
+	}
+	return cont_buenas; 
+	return cont_malas
+	$("#respuestas_correctas").html(`Respuestas Correctas: ${cont_buenas}`)
+	$("#respuestas_incorrectas").html(`Respuestas Incorrectas: ${cont_malas}`)
+
 }

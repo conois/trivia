@@ -138,10 +138,13 @@ h1{
 }
 
 .divans{
-	height: 100px;
+	height: 60px;
 	border: 1px solid black;
+	margin-left: 50px; 
 }
-
+.divans p{
+	padding-top: 15px; 
+}
 .la{
 	font-family: 'Inconsolata', monospace;
 	font-weight: 700; 
@@ -220,7 +223,31 @@ h1{
 	color: white; 
 }
 /*End Game*/
-
 #endGame{
-	height: 79vh; 
+	height:80vh;
+	background-color: #ED8F07; 
+	color: #FFF; 
+}
+
+#endGame h5{
+	text-align: center; 
+	font-family: 'Luckiest Guy', cursive;
+	font-size: 40px;
+	margin-top: 0;
+	padding-top: 30%; 
+}
+
+.res{
+	color: #FFF; 
+	font-size: 20px; 
+	font-family: 'Inconsolata', monospace;
+	padding-left: 30px; 
+	margin-top: 30px; 
+}
+
+#final{
+	padding-left: 80px; 
+	font-size: 32px; 
+	font-family: 'Luckiest Guy', cursive;
+
 }
